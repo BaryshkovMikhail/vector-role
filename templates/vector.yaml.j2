@@ -1,0 +1,14 @@
+# Configuration for Vector
+sources:
+  demo_logs:
+    type: demo_logs
+    format: syslog
+    interval: 1s
+
+sinks:
+  stdout:
+    type: console
+    inputs:
+      - demo_logs
+    target: stdout
+    encoding: text

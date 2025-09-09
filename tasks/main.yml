@@ -1,0 +1,34 @@
+# vector-role/tasks/main.yml
+---
+- name: Install Vector
+  become: true
+  ansible.builtin.apt:
+    name: vector
+    state: present
+    update_cache: yes
+
+- name: Template vector config
+  become: true
+  ansible.builtin.template:
+    src: vector.yaml.j2
+    dest: /etc/vector/vector.yaml
+    owner: vector
+    group: vector
+    mode: '0644'
+  notify: Restart Vector
+
+- name: Ensure Vector service is enabled and running
+  become: true
+  ansible.builtin.systemd:
+    name: vector
+    state: started
+    enabled: yes
+
+- name: Create logs directory
+  become: true
+  ansible.builtin.file:
+    path: /var/log/vector
+    state: directory
+    owner: vector
+    group: vector
+    mode: '0755'

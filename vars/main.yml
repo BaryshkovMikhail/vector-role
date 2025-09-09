@@ -1,0 +1,4 @@
+---
+vector_config_path: /etc/vector/vector.yaml
+vector_user: vector
+vector_group: vector
